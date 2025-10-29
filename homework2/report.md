@@ -594,3 +594,16 @@ int main() {
 }
 ```
 ## 效能分析
+# Polynomial 類別效能分析
+
+## 時間複雜度
+- **AddTerm() / NewTerm()**：插入、合併同指數、排序，最壞 `O(terms)`  
+- **Evaluate(x)**：遍歷所有項次並計算 `pow(x, exp)`，`O(terms * log(max_exp))`  
+- **operator<<**：輸出所有項次，`O(terms)`  
+- **operator>>**：輸入 n 項，每次呼叫 AddTerm()，總 `O(n^2)`  
+- **加法** `operator+`：`O((n+m)^2)`  
+- **乘法** `operator*`：`O(n^2 * m^2)`，可用哈希表改進至 `O(n*m*log(n*m))`  
+
+## 空間複雜度
+- `termArray` 動態陣列，最終 `O(n)`  
+- 擴充時臨時陣列額外 `O(n)`，總體 `O(n)`
