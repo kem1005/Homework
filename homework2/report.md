@@ -594,9 +594,7 @@ int main() {
 }
 ```
 ## 效能分析
-# Polynomial 類別效能分析
-
-## 時間複雜度
+#### 時間複雜度
 - **AddTerm() / NewTerm()**：插入、合併同指數、排序，最壞 `O(terms)`  
 - **Evaluate(x)**：遍歷所有項次並計算 `pow(x, exp)`，`O(terms * log(max_exp))`  
 - **operator<<**：輸出所有項次，`O(terms)`  
@@ -604,6 +602,35 @@ int main() {
 - **加法** `operator+`：`O((n+m)^2)`  
 - **乘法** `operator*`：`O(n^2 * m^2)`，可用哈希表改進至 `O(n*m*log(n*m))`  
 
-## 空間複雜度
+#### 空間複雜度
 - `termArray` 動態陣列，最終 `O(n)`  
 - 擴充時臨時陣列額外 `O(n)`，總體 `O(n)`
+## 測試與驗證
+| 測試案例 | 輸入資料 | 
+|----------|--------------|
+| 測試一   |        3(個資料)   |     
+|  第一資料        |1 1|
+|  第二資料        |   2 1       | 
+|  第三資料        |   2 3      | 
+|  x的值        |   4    |
+
+| 輸出資料 |  p(x)|p(4)| 
+|----------|--------------|------|
+| 所有資料統整  |       2x^3 + 3x   |   140  |
+
+### 編譯與執行指令
+#### 測試輸入
+```shell
+Enter number of terms: 3
+Enter coefficient and exponent for term 1: 1 1
+Enter coefficient and exponent for term 2: 2 1
+Enter coefficient and exponent for term 3: 2 3
+
+Enter x value: 4
+```
+#### 測試輸出
+```shell
+p(x) = 2x^3 + 3x
+
+p(4) = 140
+```
