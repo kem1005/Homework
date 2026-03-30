@@ -156,7 +156,7 @@ int main() {
         myMinHeap.Push(inputValue);
     }
 
-    cout << "\n完成！目前 Heap 的內部陣列結構 (依 index 順序)：\n";
+    cout << "\n目前 Heap 的內部陣列結構 ：\n";
     myMinHeap.PrintByIndex();
     cout << "=======================================" << endl;
 
