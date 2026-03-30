@@ -192,7 +192,7 @@ O(1)
 | 測試一   |   5  |     1 2 3 4 7        |     目前 Heap 的內部陣列結構 ：1 -> 2 -> 3 -> 4 -> 7    | 
 
 ### 結論
-本實驗成功以 Min-Heap 實作最小優先佇列，透過 Template 提高類型通用性。程式採用 1-based 陣列簡化二元樹索引計算，並實作動態擴充與上下調整（Up/Down-heap）機制。經測試，系統能穩定維持堆積性質，確保 $O(\log n)$ 的操作效率。
+以 Min-Heap 實作最小優先佇列，透過 Template 提高類型通用性。程式採用 1-based 陣列簡化二元樹索引計算，並實作動態擴充與上下調整機制。經測試，系統能穩定維持堆積性質，確保 $O(\log n)$ 的操作效率。
 ## 申論及開發報告
 
 ### 開發目的
@@ -223,9 +223,9 @@ O(1)
 - 具體實作 MinHeap<T>
   主要成員：
 
-    - T* heap：存資料的動態陣列
-    - int capacity：容量
-    - int size：目前元素量（堆大小）
+    - T* elements：存資料的動態陣列
+    - int maxCapacity：容量
+    - int currentCount：目前元素量（堆大小）
     - 並提供：
       - Resize()：當容量不足時，將容量倍增並搬移資料
 # Quit_2 Binary Search Tree
@@ -259,6 +259,8 @@ O(1)
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
+
 using namespace std;
 
 struct Node {
@@ -270,10 +272,8 @@ struct Node {
 
 Node* insert(Node* root, int key) {
     if (!root) return new Node(key);
-
     if (key < root->key) root->left = insert(root->left, key);
     else if (key > root->key) root->right = insert(root->right, key);
-    
     return root;
 }
 
@@ -291,13 +291,12 @@ void destroy(Node* root) {
     delete root;
 }
 
-// Fisher–Yates shuffle
 void shuffleArray(int* a, int n) {
     for (int i = n - 1; i > 0; --i) {
         int j = rand() % (i + 1);
-        int tmp = a[i];
+        int temp = a[i];
         a[i] = a[j];
-        a[j] = tmp;
+        a[j] = temp;
     }
 }
 
@@ -305,81 +304,37 @@ int main() {
     srand((unsigned)time(nullptr)); 
 
     int ns[] = { 100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
+    int len = sizeof(ns) / sizeof(ns[0]);
 
-    for (int idx = 0; idx < (int)(sizeof(ns) / sizeof(ns[0])); ++idx) {
-        int n = ns[idx];
+    cout << left << setw(10) << "n" 
+         << setw(10) << "height" 
+         << "height/log2(n)" << endl;
+    cout << "---------------------------------------" << endl;
+
+    for (int i = 0; i < len; ++i) {
+        int n = ns[i];
         Node* root = nullptr;
 
-        
         int* arr = new int[n];
-        for (int i = 0; i < n; ++i) arr[i] = i + 1;
+        for (int j = 0; j < n; ++j) arr[j] = j + 1;
 
-       
         shuffleArray(arr, n);
-        for (int i = 0; i < n; ++i) {
-            root = insert(root, arr[i]);
+        for (int j = 0; j < n; ++j) {
+            root = insert(root, arr[j]);
         }
 
         int h = height(root);
         double ratio = h / log2((double)n);
 
-        cout << "n = " << n
-            << ", height = " << h
-            << ", height/log2(n) = " << ratio << "\n";
+        cout << left << setw(10) << n 
+             << setw(10) << h 
+             << fixed << setprecision(4) << ratio << "\n";
 
         delete[] arr;
         destroy(root);
     }
 
     return 0;
-}
-```
-###  (b)
-```cpp
-using namespace std;
-
-struct Node {
-    int key;
-    Node* left;
-    Node* right;
-    explicit Node(int k) : key(k), left(nullptr), right(nullptr) {}
-};
-
-static Node* findMin(Node* node) {
-    while (node && node->left) node = node->left;
-    return node;
-}
-
-Node* deleteKey(Node* root, int k) {
-    if (!root) return nullptr;
-
-    if (k < root->key) {
-        root->left = deleteKey(root->left, k);
-    } else if (k > root->key) {
-        root->right = deleteKey(root->right, k);
-    } else {
-        // 找到要刪的節點 root
-        if (!root->left && !root->right) {
-            delete root;
-            return nullptr;
-        }
-        if (!root->left) {
-            Node* r = root->right;
-            delete root;
-            return r;
-        }
-        if (!root->right) {
-            Node* l = root->left;
-            delete root;
-            return l;
-        }
-
-      
-        Node* succ = findMin(root->right);
-        root->key = succ->key;
-        root->right = deleteKey(root->right, succ->key);
-    }
-    return root;
 }
 ```
 ## 效能分析
@@ -398,29 +353,9 @@ Node* deleteKey(Node* root, int k) {
 - 每個節點：𝑂(1)
 - 總空間：𝑂(𝑛)
 
-### (b)
-### 時間複雜度
-deleteNode 效能:刪除操作時間複雜度：O(h)
-|程式|高度| 時間複雜度  |
-|----------|--------------|--------------|
-|deleteKey()|h|O(h)|
-## 測試與驗證
-| 測試案例 | 輸入參數 n   | 預期輸出  height, height/ $\log_2 n$  | 實際輸出 height, height/  $\log_2 n$ | 
-|----------|--------------|----------|----------|
-| 測試一   |   100    |  13,1.95669        |   13,1.95669    | 
-| 測試二   |    500   |    19,2.11917    |   19,2.11917    | 
-| 測試三  |    1000   |     23,2.3079    |  23, 2.3079     | 
-| 測試四  |  2000     |     27,2.4622   |   27,2.4622| 
-| 測試五  |  3000     |    27,2.33751    |  27,2.33751    | 
-| 測試六  |   4000    |    30,2.50715   |  30,2.50715   | 
-| 測試七  |   5000    |      27,2.19732   |   27,2.19732     | 
-| 測試八 | 6000    |     29,2.31062   |    29,2.31062   | 
-| 測試九   |  7000     |   27,2.11381      |    27,2.11381 | 
-| 測試十   |    8000  |    32,2.46803     |    32,2.46803 | 
-| 測試十一|    9000   |    32,2.43611     |    32,2.43611  | 
-| 測試十二   |    10000   |    34,2.55875     |   34,2.55875   | 
+
 ### 線性圖
-![BST ratio plot](src/2.png)
+![BST ratio plot](src/53.png)
 ## 結論
 本程式顯示，在資料輸入下，二元搜尋樹的高度趨近於 𝑂(log⁡𝑛)但在極端情況下仍可能退化為 𝑂(𝑛)，因此實務上常需使用平衡樹以維持穩定效能。
 
