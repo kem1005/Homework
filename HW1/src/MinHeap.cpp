@@ -49,7 +49,7 @@ public:
 
     const T& Top() const override {
         if (IsEmpty()) {
-            throw runtime_error("¥Ø«e Heap ¬OªÅªº¡AµLªk¨ú±o³»ºİ¤¸¯À¡I");
+            throw runtime_error("ç›®å‰ Heap æ˜¯ç©ºçš„ï¼Œç„¡æ³•å–å¾—é ‚ç«¯å…ƒç´ ï¼");
         }
         return elements[1];
     }
@@ -71,7 +71,7 @@ public:
 
     void Pop() override {
         if (IsEmpty()) {
-            throw runtime_error("¥Ø«e Heap ¤w¸gªÅ¤F¡AµLªk¶i¦æ§R°£³á¡I");
+            throw runtime_error("ç›®å‰ Heap å·²ç¶“ç©ºäº†ï¼Œç„¡æ³•é€²è¡Œåˆªé™¤å–”ï¼");
         }
 
         T lastElement = elements[currentCount--];
@@ -98,7 +98,7 @@ public:
 
     void PrintByIndex() const {
         if (IsEmpty()) {
-            cout << "Heap ¥Ø«e¨S¦³¤¸¯À¡C" << endl;
+            cout << "Heap ç›®å‰æ²’æœ‰å…ƒç´ ã€‚" << endl;
             return;
         }
         
@@ -114,16 +114,16 @@ int main() {
     int totalItems, inputValue;
 
     cout << "test Min-Heap" << endl;
-    cout << "½Ğ¿é¤J¡G";
+    cout << "è«‹è¼¸å…¥nå€‹æ•¸å­—ï¼š";
     cin >> totalItems;
 
-    cout << "½Ğ¨Ì§Ç¿é¤J " << totalItems << " ­Ó¤¸¯À ¡G\n> ";
+    cout << "è«‹ä¾åºè¼¸å…¥ " << totalItems << " å€‹å…ƒç´  ï¼š\n> ";
     for (int i = 0; i < totalItems; i++) {
         cin >> inputValue;
         myMinHeap.Push(inputValue);
     }
 
-    cout << "\n§¹¦¨¡I¥Ø«e Heap ªº¤º³¡°}¦Cµ²ºc (¨Ì index ¶¶§Ç)¡G\n";
+    cout << "\nå®Œæˆï¼ç›®å‰ Heap çš„å…§éƒ¨é™£åˆ—çµæ§‹ (ä¾ index é †åº)ï¼š\n";
     myMinHeap.PrintByIndex();
     cout << "=======================================" << endl;
 
