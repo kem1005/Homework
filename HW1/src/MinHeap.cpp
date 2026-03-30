@@ -49,7 +49,7 @@ public:
 
     const T& Top() const override {
         if (IsEmpty()) {
-            throw runtime_error("目前 Heap 是空的，無法取得頂端元素！");
+            throw runtime_error("目前是空的，無法取得頂端元素！");
         }
         return elements[1];
     }
@@ -71,7 +71,7 @@ public:
 
     void Pop() override {
         if (IsEmpty()) {
-            throw runtime_error("目前 Heap 已經空了，無法進行刪除喔！");
+            throw runtime_error("已經空了，無法刪除");
         }
 
         T lastElement = elements[currentCount--];
@@ -98,7 +98,7 @@ public:
 
     void PrintByIndex() const {
         if (IsEmpty()) {
-            cout << "Heap 目前沒有元素。" << endl;
+            cout << "沒元素。" << endl;
             return;
         }
         
@@ -123,7 +123,7 @@ int main() {
         myMinHeap.Push(inputValue);
     }
 
-    cout << "\n完成！目前 Heap 的內部陣列結構 (依 index 順序)：\n";
+    cout << "\n目前 Heap 的內部陣列結構 ：\n";
     myMinHeap.PrintByIndex();
     cout << "=======================================" << endl;
 
