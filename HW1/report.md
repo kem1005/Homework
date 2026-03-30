@@ -147,7 +147,7 @@ int main() {
     int totalItems, inputValue;
 
     cout << "test Min-Heap" << endl;
-    cout << "請輸入：";
+    cout << "請輸入n個數字：";
     cin >> totalItems;
 
     cout << "請依序輸入 " << totalItems << " 個元素 ：\n> ";
