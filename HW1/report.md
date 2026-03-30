@@ -33,114 +33,132 @@
 ```cpp
 #include <iostream>
 #include <string>
+#include <stdexcept>
+
 using namespace std;
 
 template <class T>
-class MinPQ {
+class IMinPriorityQueue {
 public:
-    virtual ~MinPQ() {}
+    virtual ~IMinPriorityQueue() {}
     virtual bool IsEmpty() const = 0;
     virtual const T& Top() const = 0;
-    virtual void Push(const T&) = 0;
+    virtual void Push(const T& item) = 0;
     virtual void Pop() = 0;
 };
 
 template <class T>
-class MinHeap : public MinPQ<T> {
+class MinHeap : public IMinPriorityQueue<T> {
 private:
-    T* heap;
-    int capacity;
-    int size;
+    T* elements;
+    int maxCapacity;
+    int currentCount;
 
-    void Resize() {
-        capacity *= 2;
-        T* newHeap = new T[capacity + 1];
-        for (int i = 1; i <= size; i++)
-            newHeap[i] = heap[i];
-        delete[] heap;
-        heap = newHeap;
+    void ExpandCapacity() {
+        maxCapacity *= 2;
+        T* newElements = new T[maxCapacity + 1];
+        
+        for (int i = 1; i <= currentCount; i++) {
+            newElements[i] = elements[i];
+        }
+        delete[] elements;
+        elements = newElements;
     }
 
 public:
-    MinHeap(int cap = 10) {
-        capacity = cap;
-        heap = new T[capacity + 1]; //  index從1開始
-        size = 0;
+    MinHeap(int initialCapacity = 10) {
+        maxCapacity = initialCapacity;
+        elements = new T[maxCapacity + 1]; 
+        currentCount = 0;
     }
 
     ~MinHeap() {
-        delete[] heap;
+        delete[] elements;
     }
 
-    bool IsEmpty() const {
-        return size == 0;
+    bool IsEmpty() const override {
+        return currentCount == 0;
     }
 
-    const T& Top() const {
-        if (IsEmpty())
-            throw runtime_error("Heap is empty");
-        return heap[1];
+    const T& Top() const override {
+        if (IsEmpty()) {
+            throw runtime_error("目前是空的，無法取得頂端元素！");
+        }
+        return elements[1];
     }
 
-    void Push(const T& x) {
-        if (size + 1 == capacity)
-            Resize();
-
-        int i = ++size;
-
-        while (i != 1 && x < heap[i / 2]) {
-            heap[i] = heap[i / 2];
-            i /= 2;
+    void Push(const T& newItem) override {
+        if (currentCount + 1 == maxCapacity) {
+            ExpandCapacity();
         }
 
-        heap[i] = x;
+        int currentIndex = ++currentCount;
+
+        while (currentIndex != 1 && newItem < elements[currentIndex / 2]) {
+            elements[currentIndex] = elements[currentIndex / 2];
+            currentIndex /= 2;
+        }
+
+        elements[currentIndex] = newItem;
     }
 
-    void Pop() {
-        if (IsEmpty())
-            throw runtime_error("Heap is empty");
+    void Pop() override {
+        if (IsEmpty()) {
+            throw runtime_error("已經空了，無法刪除");
+        }
 
-        T last = heap[size--];
+        T lastElement = elements[currentCount--];
 
-        int parent = 1;
-        int child = 2;
+        int parentIndex = 1;
+        int childIndex = 2;
 
-        while (child <= size) {
-            if (child < size && heap[child] > heap[child + 1])
-                child++;
+        while (childIndex <= currentCount) {
+            if (childIndex < currentCount && elements[childIndex] > elements[childIndex + 1]) {
+                childIndex++;
+            }
 
-            if (last <= heap[child])
+            if (lastElement <= elements[childIndex]) {
                 break;
+            }
 
-            heap[parent] = heap[child];
-            parent = child;
-            child *= 2;
+            elements[parentIndex] = elements[childIndex];
+            parentIndex = childIndex;
+            childIndex *= 2;
         }
 
-        heap[parent] = last;
+        elements[parentIndex] = lastElement;
     }
+
     void PrintByIndex() const {
-        for (int i = 1; i <= size; i++) {
-            cout << heap[i] << " ";
+        if (IsEmpty()) {
+            cout << "沒元素。" << endl;
+            return;
+        }
+        
+        for (int i = 1; i <= currentCount; i++) {
+            cout << elements[i] << (i == currentCount ? "" : " -> ");
         }
         cout << endl;
     }
 };
 
 int main() {
-    MinHeap<int> h;
+    MinHeap<int> myMinHeap;
+    int totalItems, inputValue;
 
-    int n, x;
-    cout << "輸入元素個素:";
-    cin >> n;
-    cout << "輸入元素:";
-    for (int i = 0; i < n; i++) {
-        cin >> x;
-        h.Push(x);
+    cout << "test Min-Heap" << endl;
+    cout << "請輸入：";
+    cin >> totalItems;
+
+    cout << "請依序輸入 " << totalItems << " 個元素 ：\n> ";
+    for (int i = 0; i < totalItems; i++) {
+        cin >> inputValue;
+        myMinHeap.Push(inputValue);
     }
 
-    cout << "依 index 輸出: ";
-    h.PrintByIndex();
+    cout << "\n完成！目前 Heap 的內部陣列結構 (依 index 順序)：\n";
+    myMinHeap.PrintByIndex();
+    cout << "=======================================" << endl;
 
     return 0;
 }
