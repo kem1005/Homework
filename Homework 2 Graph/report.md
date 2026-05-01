@@ -653,23 +653,64 @@ int main() {
 | P2(2)    | x = 2                   | 148                                    | 148                                    |
 ### 測試輸入
 ```
-3 3 3 3 2 2 0
-第一個3是指有三項
-3       3 3 3 2 2 0 = 3x3+3x2+2x
-4 7 4 3 3 2 2 4 0
-第一個4是指有四項
-4       7 4 3 3 2 2 4 0 = 7x4+3x3+2x2+4x
-x=2
+3 3 1
+(第一行：3個點、3條邊、1為有向圖)
+0 1 5
+(第一條邊：0→1 權重 5)
+1 2 -10
+(第二條邊：1→2 權重 -10，此為負權邊)
+0 2 2
+(第三條邊：0→2 權重 2)
 ```
 ### 測試輸出
 ```
-P1 = 3x^3  + 3x^2  + 2x^0
-P2 = 7x^4  + 3x^3  + 2x^2  + 4x^0
-P1 + P2 = 7x^4  + 6x^3  + 5x^2  + 6x^0
-P1 - P2 = -7x^4  + 1x^2  + -2x^0
-P1 * P2 = 21x^7  + 30x^6  + 15x^5  + 20x^4  + 18x^3  + 16x^2  + 8x^0
-P1=>P(2)=38
-P2=>P(2)=148
+=== LIST ===
+DFS s
+BFS s
+COMPONENTS
+MST_KRUSKAL
+MST_PRIM s
+DIJKSTRA s
+BELLMAN_FORD s
+FLOYD_WARSHALL
+TRANSITIVE_CLOSURE
+AOV_TOPO
+AOE_CRITICAL
+HELP
+EXIT
+
+再次輸入:
+DFS s
+輸出:
+DFS order: 0 1 2
+
+再次輸入:
+BFS s
+輸出:
+BFS order: 0 1 2
+
+再次輸入:
+MST_PRIM s
+輸出:
+MST_PRIM: only for undirected graphs.
+
+再次輸入:
+DIJKSTRA s
+輸出:
+DIJKSTRA: graph has negative edge; not allowed.
+
+
+再次輸入:
+BELLMAN_FORD s
+輸出:
+Bellman-Ford distances from 0:
+0: 0
+1: 5
+2: -5
+
+再次輸入:
+
+輸出:
 ```
 ## 申論及開發報告
 捨棄了遞迴 DFS，改用  Stack的疊玳寫法。這是因為如果點的數量幾萬個，遞迴會讓系統堆疊爆掉導致當機。
