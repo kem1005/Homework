@@ -648,22 +648,23 @@ int main() {
 | 二 | 0 1 5 |   |點 0 → 點 1，權重（距離）是 5。|
 | 三 | 1 2 -10 |      |點 1 → 點 2，權重是 -10（這是負權邊）。|
 | 四 |0 2 2 |     |點 0 → 點 2，權重是 2。|
-| 五 |      |=== LIST ===
-  DFS s
-  BFS s
-  COMPONENTS
-  MST_KRUSKAL
-  MST_PRIM s
-  DIJKSTRA s
-  BELLMAN_FORD s
-  FLOYD_WARSHALL
-  TRANSITIVE_CLOSURE
-  AOV_TOPO
-  AOE_CRITICAL
-  HELP
-  EXIT     ||
-| 六 |      |    |  |
-| 七 |      || |
+| 五 |      |=== LIST ===|      |
+| 六 | | DFS s|從節點 s 開始進行「深度優先搜尋」。|
+| 七 | |BFS s|從節點 s 開始進行「廣度優先搜尋」。|
+| 八 | |COMPONENTS|找出圖中所有的「連通元件」。|
+| 九 | |MST_KRUSKAL|使用 Kruskal 演算法找「最小生成樹」。|
+| 十 | |MST_PRIM s|從點 s 開始，用 Prim 演算法找「最小生成樹」。|
+| 十一 | | DIJKSTRA s|計算從點 s 到其他所有點的最短距離。|
+| 十二| |BELLMAN_FORD s|同樣是算最短距離，但可以處理「負權邊」。|
+| 十三 | |FLOYD_WARSHALL|計算「所有點對所有點」的最短路徑。|
+| 十四| |TRANSITIVE_CLOSURE|計算「遞移閉包」。|  
+| 十五 | |AOV_TOPO|進行「拓撲排序」。|
+| 十六| |AOE_CRITICAL|找出「關鍵路徑」。|  
+| 十七 | |HELP|重新顯示這份清單（救命清單）|
+| 十八| |EXIT|關閉程式並退出。|    
+| 十九| DFS s|DFS order: 0 1 2|從節點 s 開始進行「深度優先搜尋」|      
+| 二十|按下enter| |關閉程式並退出|     
+     
 ### 測試輸入
 ```
 3 3 1
