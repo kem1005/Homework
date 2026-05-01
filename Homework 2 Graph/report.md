@@ -663,8 +663,7 @@ int main() {
 | 十七 | |HELP|重新顯示這份清單（救命清單）|
 | 十八| |EXIT|關閉程式並退出。|    
 | 十九| DFS s|DFS order: 0 1 2|從節點 s 開始進行「深度優先搜尋」|      
-| 二十|按下enter| |關閉程式並退出|     
-     
+| 二十|按下enter| |關閉程式並退出|       
 ### 測試輸入
 ```
 3 3 1
@@ -713,7 +712,6 @@ DIJKSTRA s
 輸出:
 DIJKSTRA: graph has negative edge; not allowed.
 
-
 再次輸入:
 BELLMAN_FORD s
 輸出:
@@ -722,9 +720,7 @@ Bellman-Ford distances from 0:
 1: 5
 2: -5
 
-再次輸入:
 
-輸出:
 ```
 ## 申論及開發報告
 捨棄了遞迴 DFS，改用  Stack的疊玳寫法。這是因為如果點的數量幾萬個，遞迴會讓系統堆疊爆掉導致當機。
