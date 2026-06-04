@@ -177,5 +177,32 @@ int main() {
 #### 時間複雜度和空間複雜度
 ## 測試與驗證
 ### 測試輸出
+```
+Clock accuracy: 0.0001 ms
+n = 500 (worst-case ms)
+Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0
+n = 500 (average-case ms)
+Insertion: 0.05 Quick: 0        Merge: 0.05     Heap: 0.1       Composite: 0.05
+n = 1000 (worst-case ms)
+Insertion: 2    Quick: 0        Merge: 0        Heap: 1 Composite: 0
+n = 1000 (average-case ms)
+Insertion: 0    Quick: 0.1      Merge: 0.1      Heap: 0.2       Composite: 0.2
+n = 2000 (worst-case ms)
+Insertion: 9    Quick: 0        Merge: 0        Heap: 1 Composite: 0
+n = 2000 (average-case ms)
+Insertion: 0.15 Quick: 0.15     Merge: 0.25     Heap: 0.35      Composite: 0.35
+n = 3000 (worst-case ms)
+Insertion: 18   Quick: 1        Merge: 0        Heap: 1 Composite: 0
+n = 3000 (average-case ms)
+Insertion: 0.1  Quick: 0.45     Merge: 0.35     Heap: 0.7       Composite: 0.4
+n = 4000 (worst-case ms)
+Insertion: 34   Quick: 1        Merge: 0        Heap: 1 Composite: 0
+n = 4000 (average-case ms)
+Insertion: 0.35 Quick: 0.55     Merge: 0.55     Heap: 0.95      Composite: 0.55
+n = 5000 (worst-case ms)
+Insertion: 49   Quick: 1        Merge: 1        Heap: 2 Composite: 1
+n = 5000 (average-case ms)
+Insertion: 0.15 Quick: 0.65     Merge: 0.8      Heap: 1.15      Composite: 0.8
+```
 ## 申論及開發報告
 ### 結論
