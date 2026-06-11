@@ -2,6 +2,8 @@
 # Homework Sorting Project
 # Problem
 ## 解題說明
+本題要求實作一套完整的排序效能分析框架，針對插入排序（Insertion Sort）、快速排序（Quick Sort）、合併排序（Merge Sort）與堆積排序（Heap Sort）進行效能比較，並進一步設計一套動態混合排序（Composite Sort）策略。
+在實作架構上，程式透過精確的系統時鐘（Clock Accuracy）建立測試基準，並結合亂數生成器（mt19937）來模擬平均情況下的隨機資料分佈。此外，透過特定邏輯刻意產生反序數列，以精準測試各演算法在最差情況（Worst-case）下的時間複雜度表現，藉此驗證其理論效率。
 ## 程式實作
 ```
 #include <iostream>
