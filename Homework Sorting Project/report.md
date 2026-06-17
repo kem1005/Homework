@@ -180,35 +180,41 @@ int main() {
 #### 時間複雜度和空間複雜度
 | 演算法                  | 時間複雜度                  | 空間複雜度                                           |說明|
 |-----------------------|-----------------------------|---------------------------|------------------------------------|
-|Insertion Sort|$O(n^2)$ / $O(n^2)$|||
-|Quick Sort||||
-|Merge Sort||||
-|Heap Sort||||
-|Composite Sort||||
+|Insertion Sort|$O(n^2)$ / $O(n^2)$|$O(1)$|原地排序。適合極小資料量，但在面對完全反序的測資時，運算時間會呈現拋物線般的暴增。|
+|Quick Sort|$O(n \log n)$ / $O(n^2)$|$O(\log n)$|空間消耗來自遞迴堆疊。實作「三數取中法」，成功避開了反序陣列造成的 $O(n^2)$ 退化，實測表現極佳。|
+|Merge Sort|$O(n \log n)$ / $O(n \log n)$|$O(n)$|程式採用非遞迴的迴圈寫法，消除了遞迴造成的系統堆疊開銷，但代價是需要宣告一個長度同為 $n$ 的 tmp 陣列。|
+|Heap Sort|$O(n \log n)$ / $O(n \log n)$|$O(1)$|透過 Heapify 進行原地調整，不需要額外記憶體空間，且完全沒有最差情況退化的風險，效能與記憶體表現最為穩定。|
+|Composite Sort|$O(n \log n)$ / $O(n \log n)$|依條件而定|動態切換策略：$n < 20$ 調用插入、$n < 1000$ 調用快速、其餘調用合併，完美結合各家演算法在不同資料規模下的優勢。|
 
 ## 測試與驗證
 | 順序 | 輸入參數                |  預期輸出     | 說明                             | 
 |----|-------------------------|----------------------------------------|----------------------------------------|
-| 一 ||
-| 二 ||
-| 三 ||
-| 四 ||
-| 五 ||
-| 六 ||
-| 七 ||
-| 八 ||
-| 九 ||
-| 十 ||
-| 十一 ||
-| 十二 ||
-| 十三 ||
-| 十四 ||
-| 十五 ||
-| 十六 ||  
-| 十七 ||
-| 十八 ||    
-| 十九 ||      
-| 二十 ||       
+| 一 | |Clock accuracy: 0.0001 ms||
+| 二 | |n = 500 (worst-case ms)
+Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 500 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。| 
+| 三 | |n = 500 (average-case ms)
+Insertion: 0.05 Quick: 0        Merge: 0.05     Heap: 0.1       Composite: 0.05|當資料量為 500 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+| 四 | |n = 1000 (worst-case ms)
+Insertion: 2    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 1000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
+| 五 | |n = 1000 (average-case ms)
+Insertion: 0    Quick: 0.1      Merge: 0.1      Heap: 0.2       Composite: 0.2|當資料量為 1000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+| 六 | |n = 2000 (worst-case ms)
+Insertion: 9    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 2000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
+| 七 | |n = 2000 (average-case ms)
+Insertion: 0.15 Quick: 0.15     Merge: 0.25     Heap: 0.35      Composite: 0.35|當資料量為 2000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+| 八 | |n = 3000 (worst-case ms)
+Insertion: 18   Quick: 1        Merge: 0        Heap: 1 Composite: 0|當資料量為 3000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
+| 九 | |n = 3000 (average-case ms)
+Insertion: 0.1  Quick: 0.45     Merge: 0.35     Heap: 0.7       Composite: 0.4|當資料量為 3000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+| 十 | |n = 4000 (worst-case ms)
+Insertion: 34   Quick: 1        Merge: 0        Heap: 1 Composite: 0|當資料量為 4000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
+| 十一 | |n = 4000 (average-case ms)
+Insertion: 0.35 Quick: 0.55     Merge: 0.55     Heap: 0.95      Composite: 0.55|當資料量為 4000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+| 十二 | |n = 5000 (worst-case ms)
+Insertion: 49   Quick: 1        Merge: 1        Heap: 2 Composite: 1|當資料量為 5000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
+| 十三 | |n = 5000 (average-case ms)
+Insertion: 0.15 Quick: 0.65     Merge: 0.8      Heap: 1.15      Composite: 0.8|當資料量為 5000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
+   
 ### 測試輸出
 ```
 Clock accuracy: 0.0001 ms
@@ -238,4 +244,9 @@ n = 5000 (average-case ms)
 Insertion: 0.15 Quick: 0.65     Merge: 0.8      Heap: 1.15      Composite: 0.8
 ```
 ## 申論及開發報告
+在 Merge Sort 的實作上，我捨棄了傳統的遞迴寫法，改用 Bottom-up 的雙層 for 迴圈疊代處理。這是因為如果資料量高達幾十萬筆，深度遞迴會產生大量的系統堆疊（Stack）開銷，疊代法能讓記憶體與執行效率更穩定。
+在 Quick Sort 處理上，我加入了「三數取中法」來選擇 Pivot，防止演算法在遇到「完全反序」這種最差情況測資時，時間複雜度退化成 $O(n^2)$ 的災難。
+此外，在類別與測試設計上，我使用了 C++11 的 mt19937 確保平均情況的隨機性，並把不同排序法包裝成統一的 Function Pointer，方便未來隨時抽換或擴充其他演算法來做效能評估。
 ### 結論
+這個做完後，以前看課本講時間複雜度 $O(n^2)$ 和 $O(n \log n)$ 都覺得很抽象，但這次實際用時鐘函數測量後，看到 Insertion Sort 在資料變大時時間呈現拋物線暴增，邏輯和理論瞬間就結合起來了。
+實作 Composite Sort，我才體會到「沒有絕對最強的演算法」。在資料量極小（<20）時，反而是最簡單的 Insertion Sort 跑得最快，懂得依照資料規模去截長補短，讓程式的整體效能提升很多。
