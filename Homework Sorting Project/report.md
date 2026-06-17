@@ -5,12 +5,10 @@
 首先我們先了解本次作業的目標是由 
 
  - 插入排序
-
  - 快速排序
-
  - 歸併排序
-
- - 堆排序
+ - 堆積排序
+ - 複合排序 
 
 這些去設計出一個複合排序函數，使其在最壞時間準則下表現良好。
 ## 程式實作
@@ -288,6 +286,45 @@ int main() {
 
     return 0;
 }
+```
+### 片段程式碼的功能與邏輯：
+#### 插入排序 (Insertion Sort)
+```
+void InsertionSortRange(vector<int> &arr, int left, int right)
+{
+    for (int i = left + 1; i <= right; ++i)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= left && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+void InsertionSort(vector<int> &arr)
+{
+    if (arr.empty())
+        return;
+    InsertionSortRange(arr, 0, arr.size() - 1);
+}
+```
+- InsertionSortRange：這是插入排序的核心。它允許你只對陣列中的某個指定範圍 [left, right] 進行排序（這對後面的複合排序很有用）。基本原理是每次拿一個數字（key），往左邊已經排好序的隊伍裡面比較，把比它大的數字往右移，直到找到合適的位置放進去。
+
+- InsertionSort：對外的包裹函式（Wrapper）。先檢查陣列是否為空，如果不為空，就呼叫上面的函式，把整個陣列 [0, size-1] 進行排序。
+#### 快速排序 (Quick Sort)
+```
+```
+#### 合併排序 (Merge Sort)
+```
+```
+#### 堆積排序 (Heap Sort)
+```
+```
+#### 複合排序 (Composite Sort)
+```
 ```
 ## 效能分析
 #### 時間複雜度和
