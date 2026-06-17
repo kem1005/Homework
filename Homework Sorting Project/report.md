@@ -154,9 +154,7 @@ void compositeSort(vector<int>& arr) {
 
 // make a test 
 vector<int> worstCaseInsertion(int n) {
-    vector<int> arr(n);
-    for (int i = 0; i < i; ++i) arr[i] = n - i; 
-    
+    vector<int> arr(n);    
     for (int i = 0; i < n; ++i) arr[i] = n - i;
     return arr;
 }
@@ -298,22 +296,27 @@ int main() {
 |Heap Sort| $O(n \log n)$|$O(n \log n)$|
 
 ## 測試與驗證
-| 順序 | 輸入參數                |  預期輸出     | 說明                             | 
-|----|-------------------------|----------------------------------------|----------------------------------------|
-| 一 | |Clock accuracy: 0.0001 ms|這是程式一開始呼叫 testSort 跑了一萬次極小陣列所測出來的「時鐘精確度」。  電腦計時器非常精準，可以捕捉到小至 $0.0002$ 毫秒的運算時間。這意味著後續看到的 0 ms，通常代表該演算法執行的時間真的小於這個極限值，快到無法被精確測量。|
-| 二 | |n = 500 (worst-case ms)  Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 500 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。| 
-| 三 | |n = 500 (average-case ms)  Insertion: 0.05 Quick: 0        Merge: 0.05     Heap: 0.1       Composite: 0.05|當資料量為 500 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-| 四 | |n = 1000 (worst-case ms)  Insertion: 2    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 1000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
-| 五 | |n = 1000 (average-case ms)  Insertion: 0    Quick: 0.1      Merge: 0.1      Heap: 0.2       Composite: 0.2|當資料量為 1000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-| 六 | |n = 2000 (worst-case ms)  Insertion: 9    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 2000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
-| 七 | |n = 2000 (average-case ms)  Insertion: 0.15 Quick: 0.15     Merge: 0.25     Heap: 0.35      Composite: 0.35|當資料量為 2000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-| 八 | |n = 3000 (worst-case ms)  Insertion: 18   Quick: 1        Merge: 0        Heap: 1 Composite: 0|當資料量為 3000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
-| 九 | |n = 3000 (average-case ms)  Insertion: 0.1  Quick: 0.45     Merge: 0.35     Heap: 0.7       Composite: 0.4|當資料量為 3000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-| 十 | |n = 4000 (worst-case ms)  Insertion: 34   Quick: 1        Merge: 0        Heap: 1 Composite: 0|當資料量為 4000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
-| 十一 | |n = 4000 (average-case ms)  Insertion: 0.35 Quick: 0.55     Merge: 0.55     Heap: 0.95      Composite: 0.55|當資料量為 4000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-| 十二 | |n = 5000 (worst-case ms)  Insertion: 49   Quick: 1        Merge: 1        Heap: 2 Composite: 1|當資料量為 5000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
-| 十三 | |n = 5000 (average-case ms)  Insertion: 0.15 Quick: 0.65     Merge: 0.8      Heap: 1.15      Composite: 0.8|當資料量為 5000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
-   
+### 最壞狀況分析 (Worst-case Runtimes in ms)
+當資料量為 n筆，且資料處於「最壞狀況」時，各演算法耗費的毫秒數 (ms)。
+| 順序  |  輸出     |
+|----|-------------------------|
+| 一 |n = 500 ->    Insertion: 0.762705 ms    Quick(Max): 0.04186 ms    Merge: 0.06299 ms    Heap(Max): 0.090035 ms    Composite: 0.0864 ms|
+| 二 |n = 1000 ->    Insertion: 3.1151 ms    Quick(Max): 0.110325 ms    Merge: 0.131255 ms    Heap(Max): 0.28958 ms    Composite: 0.2038 ms|
+| 三 |n = 2000 ->    Insertion: 13.8283 ms    Quick(Max): 0.17235 ms    Merge: 0.291 ms    Heap(Max): 0.62305 ms    Composite: 0.3817 ms|
+| 四 |n = 3000 ->    Insertion: 27.705 ms    Quick(Max): 0.4803 ms    Merge: 0.4731 ms    Heap(Max): 1.36185 ms    Composite: 0.60685 ms|
+| 五 |n = 4000 ->    Insertion: 53.8867 ms    Quick(Max): 0.68665 ms    Merge: 0.63035 ms    Heap(Max): 1.6519 ms    Composite: 0.7839 ms|
+| 六|n = 5000 ->    Insertion: 79.9134 ms    Quick(Max): 0.81555 ms    Merge: 0.81 ms    Heap(Max): 2.2117 ms    Composite: 1.00615 ms|
+
+### 平均狀況分析 (Average Runtimes in ms) 
+當資料量為 n 筆，且資料處於「平均狀況」時，各演算法耗費的毫秒數 (ms)。
+| 順序  |  輸出     | 
+|----|-------------------------|
+| 一 |n = 500 ->     Insertion: 0.473159 ms    Quick: 0.039284 ms    Merge: 0.071288 ms    Heap: 0.100513 ms    Composite: 0.08932 ms|
+| 二 |n = 1000 ->     Insertion: 1.61248 ms    Quick: 0.077313 ms    Merge: 0.170585 ms    Heap: 0.232328 ms    Composite: 0.178115 ms|
+| 三 |n = 2000 ->     Insertion: 6.40731 ms    Quick: 0.21554 ms    Merge: 0.40593 ms    Heap: 0.58731 ms    Composite: 0.42767 ms|
+| 四 |n = 3000 ->     Insertion: 15.8107 ms    Quick: 0.41105 ms    Merge: 0.72026 ms    Heap: 0.99519 ms    Composite: 0.79802 ms|
+| 五 |n = 4000 ->     Insertion: 26.497 ms    Quick: 0.57002 ms    Merge: 0.9568 ms    Heap: 1.38242 ms    Composite: 0.99852 ms|
+| 六 |n = 5000 ->     Insertion: 41.9723 ms    Quick: 0.72999 ms    Merge: 1.26124 ms    Heap: 1.80986 ms    Composite: 1.35229 ms|
 ### 測試輸出
 ```
 最壞狀況分析 (Worst-case Runtimes in ms)
