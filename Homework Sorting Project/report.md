@@ -318,41 +318,41 @@ int main() {
 ```
 最壞狀況分析 (Worst-case Runtimes in ms)
 n = 500 ->
-  Insertion: 0.605 ms   Quick(Max): 0.035 ms    Merge: 0.04 ms  Heap(Max): 0.115 ms     Composite: 0.08 ms
+  Insertion: 0.762705 ms    Quick(Max): 0.04186 ms    Merge: 0.06299 ms    Heap(Max): 0.090035 ms    Composite: 0.0864 ms
 
 n = 1000 ->
-  Insertion: 2.76 ms    Quick(Max): 0.24 ms     Merge: 0.135 ms Heap(Max): 0.205 ms     Composite: 0.14 ms
+  Insertion: 3.1151 ms    Quick(Max): 0.110325 ms    Merge: 0.131255 ms    Heap(Max): 0.28958 ms    Composite: 0.2038 ms
 
 n = 2000 ->
-  Insertion: 8.5 ms     Quick(Max): 0.3 ms      Merge: 0.25 ms  Heap(Max): 0.5 ms       Composite: 0.25 ms
+  Insertion: 13.8283 ms    Quick(Max): 0.17235 ms    Merge: 0.291 ms    Heap(Max): 0.62305 ms    Composite: 0.3817 ms
 
 n = 3000 ->
-  Insertion: 20.3 ms    Quick(Max): 0.4 ms      Merge: 0.5 ms   Heap(Max): 1.05 ms      Composite: 0.55 ms
+  Insertion: 27.705 ms    Quick(Max): 0.4803 ms    Merge: 0.4731 ms    Heap(Max): 1.36185 ms    Composite: 0.60685 ms
 
 n = 4000 ->
-  Insertion: 36.35 ms   Quick(Max): 0.5 ms      Merge: 0.4 ms   Heap(Max): 1 ms Composite: 0.65 ms
+  Insertion: 53.8867 ms    Quick(Max): 0.68665 ms    Merge: 0.63035 ms    Heap(Max): 1.6519 ms    Composite: 0.7839 ms
 
 n = 5000 ->
-  Insertion: 53.4 ms    Quick(Max): 0.8 ms      Merge: 0.65 ms  Heap(Max): 2 ms Composite: 0.75 ms
+  Insertion: 79.9134 ms    Quick(Max): 0.81555 ms    Merge: 0.81 ms    Heap(Max): 2.2117 ms    Composite: 1.00615 ms
 
 平均狀況分析 (Average Runtimes in ms)
-n = 500 ->
-  Insertion: 0.278 ms   Quick: 0.026 ms Merge: 0.05 ms  Heap: 0.08 ms   Composite: 0.056 ms
+n = 500 -> 
+  Insertion: 0.473159 ms    Quick: 0.039284 ms    Merge: 0.071288 ms    Heap: 0.100513 ms    Composite: 0.08932 ms
 
-n = 1000 ->
-  Insertion: 1.102 ms   Quick: 0.064 ms Merge: 0.13 ms  Heap: 0.189 ms  Composite: 0.139 ms
+n = 1000 -> 
+  Insertion: 1.61248 ms    Quick: 0.077313 ms    Merge: 0.170585 ms    Heap: 0.232328 ms    Composite: 0.178115 ms
 
-n = 2000 ->
-  Insertion: 4.16 ms    Quick: 0.18 ms  Merge: 0.26 ms  Heap: 0.4 ms    Composite: 0.29 ms
+n = 2000 -> 
+  Insertion: 6.40731 ms    Quick: 0.21554 ms    Merge: 0.40593 ms    Heap: 0.58731 ms    Composite: 0.42767 ms
 
-n = 3000 ->
-  Insertion: 9.49 ms    Quick: 0.27 ms  Merge: 0.43 ms  Heap: 0.64 ms   Composite: 0.46 ms
+n = 3000 -> 
+  Insertion: 15.8107 ms    Quick: 0.41105 ms    Merge: 0.72026 ms    Heap: 0.99519 ms    Composite: 0.79802 ms
 
-n = 4000 ->
-  Insertion: 17.05 ms   Quick: 0.44 ms  Merge: 0.62 ms  Heap: 0.92 ms   Composite: 0.7 ms
+n = 4000 -> 
+  Insertion: 26.497 ms    Quick: 0.57002 ms    Merge: 0.9568 ms    Heap: 1.38242 ms    Composite: 0.99852 ms
 
-n = 5000 ->
-  Insertion: 26.32 ms   Quick: 0.49 ms  Merge: 0.82 ms  Heap: 1.18 ms   Composite: 0.84 ms
+n = 5000 -> 
+  Insertion: 41.9723 ms    Quick: 0.72999 ms    Merge: 1.26124 ms    Heap: 1.80986 ms    Composite: 1.35229 ms
 ```
 ## 申論及開發報告
 在這次的程式中，我們在 Merge Sort 的基礎上實作了 Composite Sort。我捨棄了把陣列遞迴切割到只剩 1 個元素的做法，而是加入了 threshold = 20 的門檻。這是因為當資料量切得很小時，頻繁的函式遞迴呼叫與記憶體配置反而會嚴重拖慢系統；這時直接切換成對小陣列極度高效的 Insertion Sort，能大幅削減遞迴深度，提升整體效能。此外，在 Quick Sort 的設計上，我沒有單純拿最左或最右邊的值當 Pivot，而是加入了 Median-of-Three（三數取中） 的防禦性寫法。這樣做可以有效避免在遇到「已經部分排序好」的極端測資時，時間複雜度退化成 $O(N^2)$ 甚至把堆疊（Stack）撐爆的風險。最後，在效能測量的數值處理上，為了避免「陣列複製」的時間干擾實驗結果，我特別在計時器中跑了一組一模一樣的空迴圈來計算基礎 Overhead，並在最終結果中將其扣除。這個防呆機制確保了記錄下來的毫秒數，都是演算法純粹運算的時間，讓數據分析更具說服力。
