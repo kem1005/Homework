@@ -316,36 +316,45 @@ int main() {
    
 ### 測試輸出
 ```
-Clock accuracy: 0.0001 ms
-n = 500 (worst-case ms)
-Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0
-n = 500 (average-case ms)
-Insertion: 0.05 Quick: 0        Merge: 0.05     Heap: 0.1       Composite: 0.05
-n = 1000 (worst-case ms)
-Insertion: 2    Quick: 0        Merge: 0        Heap: 1 Composite: 0
-n = 1000 (average-case ms)
-Insertion: 0    Quick: 0.1      Merge: 0.1      Heap: 0.2       Composite: 0.2
-n = 2000 (worst-case ms)
-Insertion: 9    Quick: 0        Merge: 0        Heap: 1 Composite: 0
-n = 2000 (average-case ms)
-Insertion: 0.15 Quick: 0.15     Merge: 0.25     Heap: 0.35      Composite: 0.35
-n = 3000 (worst-case ms)
-Insertion: 18   Quick: 1        Merge: 0        Heap: 1 Composite: 0
-n = 3000 (average-case ms)
-Insertion: 0.1  Quick: 0.45     Merge: 0.35     Heap: 0.7       Composite: 0.4
-n = 4000 (worst-case ms)
-Insertion: 34   Quick: 1        Merge: 0        Heap: 1 Composite: 0
-n = 4000 (average-case ms)
-Insertion: 0.35 Quick: 0.55     Merge: 0.55     Heap: 0.95      Composite: 0.55
-n = 5000 (worst-case ms)
-Insertion: 49   Quick: 1        Merge: 1        Heap: 2 Composite: 1
-n = 5000 (average-case ms)
-Insertion: 0.15 Quick: 0.65     Merge: 0.8      Heap: 1.15      Composite: 0.8
+最壞狀況分析 (Worst-case Runtimes in ms)
+n = 500 ->
+  Insertion: 0.605 ms   Quick(Max): 0.035 ms    Merge: 0.04 ms  Heap(Max): 0.115 ms     Composite: 0.08 ms
+
+n = 1000 ->
+  Insertion: 2.76 ms    Quick(Max): 0.24 ms     Merge: 0.135 ms Heap(Max): 0.205 ms     Composite: 0.14 ms
+
+n = 2000 ->
+  Insertion: 8.5 ms     Quick(Max): 0.3 ms      Merge: 0.25 ms  Heap(Max): 0.5 ms       Composite: 0.25 ms
+
+n = 3000 ->
+  Insertion: 20.3 ms    Quick(Max): 0.4 ms      Merge: 0.5 ms   Heap(Max): 1.05 ms      Composite: 0.55 ms
+
+n = 4000 ->
+  Insertion: 36.35 ms   Quick(Max): 0.5 ms      Merge: 0.4 ms   Heap(Max): 1 ms Composite: 0.65 ms
+
+n = 5000 ->
+  Insertion: 53.4 ms    Quick(Max): 0.8 ms      Merge: 0.65 ms  Heap(Max): 2 ms Composite: 0.75 ms
+
+平均狀況分析 (Average Runtimes in ms)
+n = 500 ->
+  Insertion: 0.278 ms   Quick: 0.026 ms Merge: 0.05 ms  Heap: 0.08 ms   Composite: 0.056 ms
+
+n = 1000 ->
+  Insertion: 1.102 ms   Quick: 0.064 ms Merge: 0.13 ms  Heap: 0.189 ms  Composite: 0.139 ms
+
+n = 2000 ->
+  Insertion: 4.16 ms    Quick: 0.18 ms  Merge: 0.26 ms  Heap: 0.4 ms    Composite: 0.29 ms
+
+n = 3000 ->
+  Insertion: 9.49 ms    Quick: 0.27 ms  Merge: 0.43 ms  Heap: 0.64 ms   Composite: 0.46 ms
+
+n = 4000 ->
+  Insertion: 17.05 ms   Quick: 0.44 ms  Merge: 0.62 ms  Heap: 0.92 ms   Composite: 0.7 ms
+
+n = 5000 ->
+  Insertion: 26.32 ms   Quick: 0.49 ms  Merge: 0.82 ms  Heap: 1.18 ms   Composite: 0.84 ms
 ```
 ## 申論及開發報告
-在 Merge Sort 的實作上，我捨棄了傳統的遞迴寫法，改用 Bottom-up 的雙層 for 迴圈疊代處理。這是因為如果資料量高達幾十萬筆，深度遞迴會產生大量的系統堆疊（Stack）開銷，疊代法能讓記憶體與執行效率更穩定。
-在 Quick Sort 處理上，我加入了「三數取中法」來選擇 Pivot，防止演算法在遇到「完全反序」這種最差情況測資時，時間複雜度退化成 $O(n^2)$ 的災難。
-此外，在類別與測試設計上，我使用了 C++11 的 mt19937 確保平均情況的隨機性，並把不同排序法包裝成統一的 Function Pointer，方便未來隨時抽換或擴充其他演算法來做效能評估。
+在這次的程式中，我們在 Merge Sort 的基礎上實作了 Composite Sort。我捨棄了把陣列遞迴切割到只剩 1 個元素的做法，而是加入了 threshold = 20 的門檻。這是因為當資料量切得很小時，頻繁的函式遞迴呼叫與記憶體配置反而會嚴重拖慢系統；這時直接切換成對小陣列極度高效的 Insertion Sort，能大幅削減遞迴深度，提升整體效能。此外，在 Quick Sort 的設計上，我沒有單純拿最左或最右邊的值當 Pivot，而是加入了 Median-of-Three（三數取中） 的防禦性寫法。這樣做可以有效避免在遇到「已經部分排序好」的極端測資時，時間複雜度退化成 $O(N^2)$ 甚至把堆疊（Stack）撐爆的風險。最後，在效能測量的數值處理上，為了避免「陣列複製」的時間干擾實驗結果，我特別在計時器中跑了一組一模一樣的空迴圈來計算基礎 Overhead，並在最終結果中將其扣除。這個防呆機制確保了記錄下來的毫秒數，都是演算法純粹運算的時間，讓數據分析更具說服力。
 ### 結論
-這個做完後，以前看課本講時間複雜度 $O(n^2)$ 和 $O(n \log n)$ 都覺得很抽象，但這次實際用時鐘函數測量後，看到 Insertion Sort 在資料變大時時間呈現拋物線暴增，邏輯和理論瞬間就結合起來了。
-實作 Composite Sort，我才體會到「沒有絕對最強的演算法」。在資料量極小（<20）時，反而是最簡單的 Insertion Sort 跑得最快，懂得依照資料規模去截長補短，讓程式的整體效能提升很多。
+結論這次做完最有感的地方是，演算法的理論複雜度真的只是基礎，實作細節跟硬體特性才是決定速度的關鍵。之前看教科書覺得 Quick Sort、Merge Sort 和 Heap Sort 平均都是 $O(N \log N)$ 應該差不多快，但把環境架起來實際跑過後，發現 Quick Sort 因為對快取記憶體（Cache）比較友善，平均速度硬是比另外兩個快上不少；而 Merge Sort 雖然穩定，但必須不斷操作 tmp 暫存陣列，確實佔用了不少額外時間。特別是為了測試極限，我自己寫了生成「最壞情況（Worst-case）」的測資函式去攻擊這些演算法，看著 Insertion Sort 的執行時間因為 $O(N^2)$ 暴增，對比 Heap Sort 依然穩如泰山，邏輯瞬間就變得非常具體。這次經驗也讓我徹底明白，為什麼現代 C++ 標準函式庫底層的 std::sort 都不會死守單一演算法，而是像我的 Composite Sort 一樣，截長補短使用混合式排序了。
