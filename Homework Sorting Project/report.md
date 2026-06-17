@@ -190,8 +190,7 @@ int main() {
 | 順序 | 輸入參數                |  預期輸出     | 說明                             | 
 |----|-------------------------|----------------------------------------|----------------------------------------|
 | 一 | |Clock accuracy: 0.0001 ms||
-| 二 | |n = 500 (worst-case ms)
-Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 500 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。| 
+| 二 | |n = 500 (worst-case ms)  Insertion: 0    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 500 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。| 
 | 三 | |n = 500 (average-case ms)  Insertion: 0.05 Quick: 0        Merge: 0.05     Heap: 0.1       Composite: 0.05|當資料量為 500 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
 | 四 | |n = 1000 (worst-case ms)  Insertion: 2    Quick: 0        Merge: 0        Heap: 1 Composite: 0|當資料量為 1000 筆，且資料處於「最差情況」時，各演算法耗費的毫秒數 (ms)。|
 | 五 | |n = 1000 (average-case ms)  Insertion: 0    Quick: 0.1      Merge: 0.1      Heap: 0.2       Composite: 0.2|當資料量為 1000 筆，將陣列「隨機打亂 (Random Permutation)」測量 20 次後取平均的耗時。|
